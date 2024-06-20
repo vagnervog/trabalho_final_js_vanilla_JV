@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estacionamento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container py-3">
+    <header>
+      <div class="d-flex flex-column flex-md-row pb-3 mb-4 border-bottom">
+        <a>
+          <img width="100" height="100"
+            src="https://imagepng.org/wp-content/uploads/2017/10/placa-estacionamento-estacionar-5.png"
+            class="attachment-full size-full wp-image-335" alt="" loading="lazy">
+          <span class="fs-1">24 Horas</span>
+        </a>
+      </div>
+      <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 fw-normal text-body-emphasis">Estacionamento Dois Irmãos</h1>
+        <p class="fs-4 text-body-secondary">Seu veículo em boas mãos</p>
+      </div>
+      <div class="row row-cols-1 row-cols-md-9 mb-3 text-center">
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm border-primary">
+            <div class="card-header py-3">
+              <h3 class="my-0 fw-normal">Gerenciamento</h3>
+              <br>
+              <div class="container">
+                <button type="button" class="w-10 btn btn-lg btn-outline-primary" data-bs-toggle="modal"
+                  data-bs-target="#modalRegistro">Registrar Entrada</button>
+                <button type="button" class="w-10 btn btn-lg btn-outline-primary" data-bs-toggle="modal"
+                  data-bs-target="#modalSaida">Registrar Saída</button>
+                <br></br>
+                <div class="row row-cols-1 row-cols-md-2 mb-2 text-center">
+                  <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                      <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Vagas Ocupadas</h4>
+                      </div>
+                      <div class="card-body">
+                        <h1 class="card-title pricing-card-title">
+                          <span id="occupied-spots">0</span><small class="text-body-secondary fw-light">/vaga</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4"></ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+                      <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Vagas Disponíveis</h4>
+                      </div>
+                      <div class="card-body">
+                        <h1 class="card-title pricing-card-title">
+                          <span id="free-spots">0</span><small class="text-body-secondary fw-light">/vaga</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <button id="add-spot" class="w-10 btn btn-lg btn-outline-primary">Adicionar Vagas</button>
+                    <button id="remove-spot" class="w-10 btn btn-lg btn-outline-primary">Remover Vagas</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal entrada-->
+            <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modalRegistroLabel">Registrar Entrada</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="placaVeiculo" class="form-label">Placa do Veículo</label>
+                        <input type="text" class="form-control" id="placaVeiculo" placeholder="Digite a placa">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="park-button">Salvar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal saída-->
+            <div class="modal fade" id="modalSaida" tabindex="-1" aria-labelledby="modalSaidaLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modalSaidaLabel">Registrar Saída</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="placaVeiculoSaida" class="form-label">
+                          <h3>Placa do Veículo</h3>
+                        </label>
+                        <input type="text" class="form-control" id="placaVeiculoSaida" placeholder="Digite a placa">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" id="park-button-out">Buscar Placa</button>
+                      </div>
+                      <div id="billing">
+                        <p>
+                        <h3>Valor total devido R$ </h3><span id="total-bill">0.00</span></p>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Planos-->
+            <div class="modal fade" id="modalPlano" tabindex="-1" aria-labelledby="modalPlanoLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h2 class="modal-title" id="modalPlanoLabel">Nossos Planos</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <h3 class="my-0 fw-normal" class="form-label">Entre em contato com a equipe pelo telefone
+                          (51)91234.5678!</h3>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </header>
+    <br></br>
+    <h4 class="fs-1 text-center">Confira abaixo os planos disponíveis</h4>
+    <br></br>
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm border-primary">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Plano Diário</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$35<small class="text-body-secondary fw-light">/Dia</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+            </ul>
+            <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal"
+              data-bs-target="#modalPlano">Confira</button>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm border-primary">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal ">Plano Semanal</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$230<small class="text-body-secondary fw-light">/semana</small>
+            </h1>
+            <ul class="list-unstyled mt-3 mb-4">
+            </ul>
+            <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal"
+              data-bs-target="#modalPlano">Confira</button>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm border-primary">
+          <div class="card-header py-3 ">
+            <h4 class="my-0 fw-normal">Plano Mensal</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$900<small class="text-body-secondary fw-light">/mês</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+            </ul>
+            <button type="button" class="w-100 btn btn-lg btn-primary" data-bs-toggle="modal"
+              data-bs-target="#modalPlano">Confira</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="estacionamento.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" src="index2.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+</html>
