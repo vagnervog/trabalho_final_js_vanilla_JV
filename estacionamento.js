@@ -21,7 +21,7 @@
 
       document.getElementById('occupied-spots').textContent = occupiedCount;
       document.getElementById('free-spots').textContent = freeCount;
-  }
+  } 
 
   // Função para adicionar uma vaga
   document.getElementById('add-spot').addEventListener('click', function() {
@@ -62,7 +62,7 @@
 
   // Função para registrar a entrada de um carro
   function parkCar(placaVeiculo) {
-      // Encontrar a primeira vaga livre
+      // Encontra a primeira vaga livre
       let freeSpotIndex = parkingSpots.findIndex(spot => !spot.occupied);
 
       if (freeSpotIndex !== -1) {
@@ -70,7 +70,7 @@
           parkingSpots[freeSpotIndex].placaVeiculo = placaVeiculo;
           parkingSpots[freeSpotIndex].entryTime = new Date(); // Horário de entrada
 
-          updateParkingStatus(); // Atualizar a exibição das vagas
+          updateParkingStatus(); // Atualiza a exibição das vagas
       } else {
           alert('Não há vagas disponíveis.');
       }
@@ -83,26 +83,23 @@
       if (parkedSpot) {
           const now = new Date();
           const parkedTimeMs = now - parkedSpot.entryTime;
-          const parkedTimeHours = Math.ceil(parkedTimeMs / (1000 * 60 * 60)); // Horas arredondadas para cima
+          const parkedTimeHours = Math.ceil(parkedTimeMs / (10 * 60 * 60)); // Horas arredondadas para cima
           const amountDue = parkedTimeHours * 2; // Cada hora custa R$ 2,00
-
+            // aqui o calculo é feito como se cada 30 segundos fossem 1 hora
           totalBill += amountDue; // Atualiza o valor total devido
           document.getElementById('total-bill').textContent = totalBill.toFixed(2); // Exibe o valor total formatado
-
+            
           alert(`Tempo estacionado: ${parkedTimeHours} horas\nValor a pagar: R$ ${amountDue.toFixed(2)}`);
 
-          // Liberar a vaga
+          // Libera a vaga
           parkedSpot.occupied = false;
           parkedSpot.placaVeiculo = null;
           parkedSpot.entryTime = null;
 
-          updateParkingStatus(); // Atualizar a exibição das vagas
+          updateParkingStatus(); // Atualiza a exibição das vagas
       } else {
           alert(`Veículo com PLACA ${placaVeiculo} não encontrado no estacionamento.`);
       }
   }
-
-  
-
-  // Inicializar o sistema com 10 vagas de estacionamento
+  // Inicia o sistema com 10 vagas de estacionamento
   initializeParkingSpots(10);
